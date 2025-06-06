@@ -4,3 +4,10 @@
 <%= @user.name %>
 <h3>メールアドレス</h3>
 <%= @user.email %>
+
+<div>
+  <%= link_to "編集", edit_user_registration_path %>
+</div>
+<div>
+  <%= link_to "戻る", root_path %>
+</div>
