@@ -8,6 +8,7 @@
     </ul>
   </div>
   <div class="my-5">
+    <%= link_to "マイページ", users_profile_path %>
     <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo_method: :delete, turbo_confirm: "本当にログアウトしますか？" }, class: "font-semibold py-2 px-4 rounded text-white bg-sky-600 hover:bg-sky-800 cursor-pointer" %>
   </div>
 <% else %>
