@@ -1,5 +1,8 @@
 class ArticlesController < ApplicationController
   def index
-    @articless = Article.all
+    @user = current_user
+  end
+
+  def show
   end
 end
