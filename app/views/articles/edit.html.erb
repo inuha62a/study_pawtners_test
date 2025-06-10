@@ -1,0 +1,21 @@
+<h1>記事編集</h1>
+
+<%= form_with model: @article do |f| %>
+  <div>
+    <%= f.label :title, "タイトル" %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.label :category, "カテゴリ" %><br>
+    <%= f.select :category, Article.categories.keys.map { |k| [k.humanize, k] } %>
+  </div>
+  <div>
+    <%= f.label :status, "ステータス" %><br>
+    <%= f.select :status, Article.statuses.keys.map { |k| [k.humanize, k] } %>
+  </div>
+  <div>
+    <%= f.label :image, "画像" %><br>
+    <%= f.file_field :image %>
+  </div>
+  <%= f.submit "更新" %>
+<% end %>

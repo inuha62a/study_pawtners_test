@@ -9,3 +9,4 @@
 
 <p>投稿者: <%= @article.user.name %></p>
 <%= link_to "編集", edit_article_path(@article) %>
+<%= button_to "削除", article_path(@article), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
