@@ -27,7 +27,7 @@
   <ul>
     <% @articles.each do |article| %>
       <li>
-        <strong><%= article.title %></strong> - カテゴリ: <%= article.category %>
+        <%= link_to article.title, article_path(article), data: { turbo: false } %>
       </li>
     <% end %>
   </ul>
