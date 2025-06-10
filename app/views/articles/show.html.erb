@@ -1,0 +1,11 @@
+<h1><%= @article.title %></h1>
+
+<p>カテゴリー: <%= @article.category %></p>
+<p>ステータス: <%= @article.status %></p>
+
+<% if @article.image.attached? %>
+  <p><%= image_tag @article.image %></p>
+<% end %>
+
+<p>投稿者: <%= @article.user.email %></p>
+<%= link_to "編集", edit_article_path(@article) %>
