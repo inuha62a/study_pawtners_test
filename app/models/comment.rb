@@ -1,8 +1,11 @@
 class Comment < ApplicationRecord
   belongs_to :article
-
   has_one_attached :image
 
-  enum tag: { official: 0, article_url: 1, ai_prompt: 2, other: 3 }
-
+  TAG_OPTIONS = {
+    official: "公式",
+    article: "記事URL",
+    ai_prompt: "AIプロンプト",
+    other: "その他"
+  }.freeze
 end

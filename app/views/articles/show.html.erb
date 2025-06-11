@@ -10,3 +10,35 @@
 <p>投稿者: <%= @article.user.name %></p>
 <%= link_to "編集", edit_article_path(@article) %>
 <%= button_to "削除", article_path(@article), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+
+<%= form_with(model: [@article, @comment], local: true, html: { multipart: true }) do |f| %>
+  <div>
+    <%= f.label :tag, "タグ" %><br>
+    <% Comment::TAG_OPTIONS.each do |key, label| %>
+      <%= check_box_tag "comment[tag][]", key, (@comment.tag || []).include?(key.to_s), id: "comment_tag_#{key}" %>
+      <%= label_tag "comment_tag_#{key}", label %><br>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :body, "本文" %><br>
+    <%= f.text_field :body %>
+  </div>
+
+  <div>
+    <%= f.label :image, "画像" %><br>
+    <%= f.file_field :image %>
+  </div>
+
+  <%= f.submit "コメントする" %>
+<% end %>
+
+<% @article.comments.each do |comment| %>
+  <div>
+    <p><strong>タグ:</strong> <%= Array(comment.tag).map(&:humanize).join(", ") %></p>
+    <p><strong>本文:</strong> <%= comment.body %></p>
+    <% if comment.image.attached? %>
+      <%= image_tag comment.image, width: 200 %>
+    <% end %>
+  </div>
+<% end %>
