@@ -11,7 +11,10 @@ Rails.application.routes.draw do
     passwords: "users/passwords"
   }
   get "users/profile" => "users#show"
-  resources :articles
+  resources :articles do
+    resources :comments, only: [:create]
+  end
+  resources :studies
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
