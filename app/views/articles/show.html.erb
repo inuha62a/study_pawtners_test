@@ -33,12 +33,8 @@
   <%= f.submit "コメントする" %>
 <% end %>
 
+<h2>コメント一覧</h2>
+
 <% @article.comments.each do |comment| %>
-  <div>
-    <p><strong>タグ:</strong> <%= Array(comment.tag).map(&:humanize).join(", ") %></p>
-    <p><strong>本文:</strong> <%= comment.body %></p>
-    <% if comment.image.attached? %>
-      <%= image_tag comment.image, width: 200 %>
-    <% end %>
-  </div>
+  <%= render partial: "comments/comment", locals: { comment: comment } %>
 <% end %>

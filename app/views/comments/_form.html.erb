@@ -1,0 +1,33 @@
+<%= form_with(model: [comment.article, comment], local: false, html: { enctype: "multipart/form-data" }) do |f| %>
+    <div class="mb-2">
+      <%= f.label :body, "コメント本文" %>
+      <%= f.text_area :body, rows: 3, class: "form-control" %>
+    </div>
+  
+    <div class="mb-2">
+      <%= f.label :tag, "タグを選択" %><br>
+      <% Comment::TAG_OPTIONS.each do |key, value| %>
+        <div class="form-check form-check-inline">
+          <%= check_box_tag "comment[tag][]", key, comment.tag&.include?(key.to_s), id: "tag_#{key}", class: "form-check-input" %>
+          <%= label_tag "tag_#{key}", value, class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+  
+    <% if comment.image.attached? %>
+      <div class="mb-2">
+        <p>現在の画像:</p>
+        <%= image_tag comment.image, size: "200x200", class: "img-thumbnail" %>
+      </div>
+    <% end %>
+  
+    <div class="mb-2">
+      <%= f.label :image, "画像を変更する" %>
+      <%= f.file_field :image, class: "form-control" %>
+    </div>
+  
+    <div class="d-flex gap-2">
+      <%= f.submit "保存", class: "btn btn-sm btn-primary" %>
+      <%= link_to "キャンセル", article_path(comment.article), data: { turbo_frame: "_top" }, class: "btn btn-sm btn-secondary" %>
+    </div>
+  <% end %>
