@@ -1,4 +1,3 @@
-<!-- app/views/comments/_comment.html.erb -->
 <% return unless comment.persisted? %>
 
 <div id="comment_<%= comment.id %>">
@@ -14,6 +13,6 @@
 
   <div class="d-flex gap-2">
     <%= link_to "編集", edit_article_comment_path(comment.article, comment), data: { turbo_frame: "comment_#{comment.id}" }, class: "btn btn-sm btn-outline-primary" %>
-    <%= link_to "削除", article_comment_path(comment.article, comment), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-outline-danger" %>
+    <%= link_to "削除", article_comment_path(comment.article, comment), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-outline-danger" %>
   </div>
 </div>

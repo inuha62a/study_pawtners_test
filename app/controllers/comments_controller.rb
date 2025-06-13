@@ -22,36 +22,30 @@ class CommentsController < ApplicationController
     end
   end
   
-
   def edit
     # Turboが自動でeditビューをレンダリング
   end
 
   def update
-    @comment.tag = Array(params[:comment][:tag])
     if @comment.update(comment_params)
-      redirect_to @article, notice: "コメントを更新しました"
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to article_path(@comment.article), notice: "コメントを更新しました。" }
+      end
     else
-      flash.now[:alert] = "更新に失敗しました"
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@comment, partial: "comments/form", locals: { comment: @comment }) }
+        format.html { render :edit, status: :unprocessable_entity }
+      end
     end
   end
-  def update
-  @comment.tag = Array(params[:comment][:tag])
-
-  if @comment.update(comment_params)
-    respond_to do |format|
-      format.turbo_stream { render partial: "comments/comment", locals: { comment: @comment } }
-      format.html { redirect_to @article, notice: "コメントを更新しました" }
-    end
-  else
-    render :edit, status: :unprocessable_entity
-  end
-end
 
   def destroy
     @comment.destroy
-    redirect_to @article, notice: "コメントを削除しました"
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to @article, notice: "コメントを削除しました" }
+    end
   end
 
   private
