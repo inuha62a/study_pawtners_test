@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   }
   get "users/profile" => "users#show"
   resources :articles do
-    resources :comments, only: [:create]
+    resources :comments, only: [:create, :edit, :update, :destroy]
   end
   resources :studies
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

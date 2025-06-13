@@ -41,4 +41,11 @@
       <%= image_tag comment.image, width: 200 %>
     <% end %>
   </div>
+  <div class="comment">
+    <p><%= comment.body %></p>
+    <% if comment.user == current_user %>
+      <%= link_to "編集", edit_article_comment_path(@article, comment) %>
+      <%= link_to "削除", article_comment_path(@article, comment), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+    <% end %>
+  </div>
 <% end %>

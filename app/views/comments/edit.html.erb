@@ -1,0 +1,6 @@
+<turbo-frame id="comment_<%= @comment.id %>">
+  <%= form_with(model: [@article, @comment], local: false) do |f| %>
+    <%= f.text_area :body %>
+    <%= f.submit "更新", class: "btn btn-primary" %>
+  <% end %>
+</turbo-frame>
