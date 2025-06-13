@@ -1,19 +1,19 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_article
-  before_action :set_comment, only: [:edit, :update, :destroy]
-  before_action :correct_user!, only: [:edit, :update, :destroy]
+  before_action :set_comment, only: [ :edit, :update, :destroy ]
+  before_action :correct_user!, only: [ :edit, :update, :destroy ]
 
   def create
     unless @article.user == current_user
       redirect_to @article, alert: "コメントできるのは記事作成者のみです"
       return
     end
-  
+
     @comment = @article.comments.build(comment_params)
     @comment.user = current_user
     @comment.tag = Array(params[:comment][:tag])
-    
+
     if @comment.save
       redirect_to @article, notice: "コメントを追加しました"
     else
@@ -21,7 +21,7 @@ class CommentsController < ApplicationController
       render "articles/show", status: :unprocessable_entity
     end
   end
-  
+
   def edit
     # Turboが自動でeditビューをレンダリング
   end

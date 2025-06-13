@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
-  before_action :set_article, only: [:edit, :update, :destroy]
-  before_action :correct_user!, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [ :new, :create ]
+  before_action :set_article, only: [ :edit, :update, :destroy ]
+  before_action :correct_user!, only: [ :edit, :update, :destroy ]
 
   def index
     @user = current_user
@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
   def edit
     # @article は before_action で取得済み
   end
-  
+
   def update
     if @article.update(article_params)
       redirect_to @article, notice: "記事を更新しました"
@@ -41,7 +41,7 @@ class ArticlesController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
-  
+
   def destroy
     @article.destroy
     redirect_to articles_path, notice: "記事を削除しました"
@@ -67,5 +67,4 @@ class ArticlesController < ApplicationController
   def article_params
     params.require(:article).permit(:title, :category, :status, :image)
   end
- 
 end
