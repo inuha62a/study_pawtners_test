@@ -1,17 +1,20 @@
 Rails.application.routes.draw do
-  root 'static_pages#home'
-  
+  root "static_pages#home"
+
   get "static_pages/terms"
   get "static_pages/privacy"
   get "static_pages/contact"
 
   devise_for :users, controllers: {
-    registrations: 'users/registrations',
+    registrations: "users/registrations",
     sessions: "users/sessions",
     passwords: "users/passwords"
   }
   get "users/profile" => "users#show"
-  resources :articles
+  resources :articles do
+    resources :comments, only: [ :create, :edit, :update, :destroy ]
+  end
+  resources :studies
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -24,5 +27,4 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  
 end

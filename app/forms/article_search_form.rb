@@ -7,7 +7,17 @@ class ArticleSearchForm
 
   def search
     scope = Article.all
-    scope = scope.where("title LIKE ?", "%#{keyword}%") if keyword.present?
+
+    if keyword.present?
+      scope = scope
+        .left_outer_joins(:comments)  # ← コメントと外部結合
+        .where(
+          "articles.title LIKE :kw OR comments.body LIKE :kw",
+          kw: "%#{keyword}%"
+        )
+        .distinct  # ← 重複排除（コメントが複数ある記事）
+    end
+
     scope = scope.where(category: category) if category.present?
     scope
   end
