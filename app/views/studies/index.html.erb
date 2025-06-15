@@ -5,3 +5,12 @@
 
 <h1>学習記録一覧</h1>
 
+<turbo-frame id="studies">
+  <ul>
+    <% @studies.each do |study| %>
+      <li>
+        <%= link_to study.title, studiy_path(study), data: { turbo: false } %>
+      </li>
+    <% end %>
+  </ul>
+</turbo-frame>

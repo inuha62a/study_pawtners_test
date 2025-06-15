@@ -1,40 +1,42 @@
-<h1><%= @article.title %></h1>
+<turbo-frame id="articles">
+  <h1><%= @article.title %></h1>
 
-<p>カテゴリー: <%= @article.category %></p>
-<p>ステータス: <%= @article.status %></p>
+  <p>カテゴリー: <%= @article.category %></p>
+  <p>ステータス: <%= @article.status %></p>
 
-<% if @article.image.attached? %>
-  <p><%= image_tag @article.image %></p>
-<% end %>
+  <% if @article.image.attached? %>
+    <p><%= image_tag @article.image %></p>
+  <% end %>
 
-<p>投稿者: <%= @article.user.name %></p>
-<%= link_to "編集", edit_article_path(@article) %>
-<%= button_to "削除", article_path(@article), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+  <p>投稿者: <%= @article.user.name %></p>
+  <%= link_to "編集", edit_article_path(@article) %>
+  <%= button_to "削除", article_path(@article), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
 
-<%= form_with(model: [@article, @comment], local: true, html: { multipart: true }) do |f| %>
-  <div>
-    <%= f.label :tag, "タグ" %><br>
-    <% Comment::TAG_OPTIONS.each do |key, label| %>
-      <%= check_box_tag "comment[tag][]", key, (@comment.tag || []).include?(key.to_s), id: "comment_tag_#{key}" %>
-      <%= label_tag "comment_tag_#{key}", label %><br>
-    <% end %>
-  </div>
+  <%= form_with(model: [@article, @comment], local: true, html: { multipart: true }) do |f| %>
+    <div>
+      <%= f.label :tag, "タグ" %><br>
+      <% Comment::TAG_OPTIONS.each do |key, label| %>
+        <%= check_box_tag "comment[tag][]", key, (@comment.tag || []).include?(key.to_s), id: "comment_tag_#{key}" %>
+        <%= label_tag "comment_tag_#{key}", label %><br>
+      <% end %>
+    </div>
 
-  <div>
-    <%= f.label :body, "本文" %><br>
-    <%= f.text_field :body %>
-  </div>
+    <div>
+      <%= f.label :body, "本文" %><br>
+      <%= f.text_field :body %>
+    </div>
 
-  <div>
-    <%= f.label :image, "画像" %><br>
-    <%= f.file_field :image %>
-  </div>
+    <div>
+      <%= f.label :image, "画像" %><br>
+      <%= f.file_field :image %>
+    </div>
 
-  <%= f.submit "コメントする" %>
-<% end %>
+    <%= f.submit "コメントする" %>
+  <% end %>
 
-<h2>コメント一覧</h2>
+  <h2>コメント一覧</h2>
 
-<% @article.comments.each do |comment| %>
-  <%= render partial: "comments/comment", locals: { comment: comment } %>
-<% end %>
+  <% @article.comments.each do |comment| %>
+    <%= render partial: "comments/comment", locals: { comment: comment } %>
+  <% end %>
+</turbo-frame>
