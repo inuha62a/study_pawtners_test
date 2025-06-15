@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
 
   def update
     @article = @comment.article
-  
+
     if @comment.update(comment_params)
       respond_to do |format|
         format.turbo_stream
