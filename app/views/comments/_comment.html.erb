@@ -1,6 +1,6 @@
 <% return unless comment.persisted? %>
 
-<div id="comment_<%= comment.id %>">
+<turbo-frame id="<%= dom_id(comment) %>">
   <% if comment.tag.present? %>
     <p>タグ: <%= comment.tag.map { |t| Comment::TAG_OPTIONS[t.to_sym] || t }.join(", ") %></p>
   <% end %>
@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="d-flex gap-2">
-    <%= link_to "編集", edit_article_comment_path(comment.article, comment), data: { turbo_frame: "comment_#{comment.id}" }, class: "btn btn-sm btn-outline-primary" %>
+    <%= link_to "編集", edit_article_comment_path(comment.article, comment), data: { turbo_frame: dom_id(comment) }, class: "btn btn-sm btn-outline-primary" %>
     <%= link_to "削除", article_comment_path(comment.article, comment), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-outline-danger" %>
   </div>
-</div>
+</turbo-frame>

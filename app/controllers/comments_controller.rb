@@ -27,10 +27,12 @@ class CommentsController < ApplicationController
   end
 
   def update
+    @article = @comment.article
+  
     if @comment.update(comment_params)
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to article_path(@comment.article), notice: "コメントを更新しました。" }
+        format.html { redirect_to article_path(@article), notice: "コメントを更新しました。" }
       end
     else
       respond_to do |format|

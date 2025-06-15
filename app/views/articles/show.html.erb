@@ -37,6 +37,8 @@
   <h2>コメント一覧</h2>
 
   <% @article.comments.each do |comment| %>
-    <%= render partial: "comments/comment", locals: { comment: comment } %>
+    <turbo-frame id="comment_<%= comment.id %>">
+      <%= render partial: "comments/comment", locals: { comment: comment } %>
+    </turbo-frame>
   <% end %>
 </turbo-frame>
