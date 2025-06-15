@@ -8,6 +8,7 @@ class CreateArticles < ActiveRecord::Migration[7.2]
 
        # enum用の整数型カラム（type は予約語なので category に変更）
        t.integer :category, null: false, default: 0
+ 
        # ステータス管理用のenumカラム
        t.integer :status, null: false, default: 0
 

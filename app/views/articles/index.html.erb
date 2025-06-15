@@ -27,7 +27,7 @@
   <ul>
     <% @articles.each do |article| %>
       <li>
-        <%= link_to article.title, article_path(article), data: { turbo_frame: "articles" }  %>
+        <%= link_to article.title, article_path(article), data: { turbo: false } %>
       </li>
     <% end %>
   </ul>
