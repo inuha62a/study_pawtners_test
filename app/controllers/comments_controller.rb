@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    # Turboが自動でeditビューをレンダリング
+    # Turboが自動でeditビューをレンダリングしてくれるので空白でOK
   end
 
   def update
