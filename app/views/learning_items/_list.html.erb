@@ -1,0 +1,25 @@
+<div>
+  <h2>すべての学習項目</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>項目名</th>
+        <th>ステータス</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% learning_items.each do |item| %>
+        <tr id="<%= dom_id(item) %>">
+          <td><%= item.name %></td>
+          <td><%= item.completed ? "完了" : "未完了" %></td>
+          <td>
+            <%= button_to "切替", toggle_complete_learning_item_path(item), method: :patch, form: { data: { turbo: true } } %>
+            <%= link_to "編集", edit_learning_item_path(item) %>
+            <%= button_to "削除", learning_item_path(item), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

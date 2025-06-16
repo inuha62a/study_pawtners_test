@@ -5,44 +5,34 @@
 
 <%= link_to "新しい学習記録を追加", new_study_record_path, class: "btn btn-primary mb-3" %>
 
-<%= form_with url: study_records_path, method: :get, local: true do |f| %>
-  <%= f.label :from, "開始日" %>
-  <%= f.date_field :from, value: @search_form.from %>
+<%= form_with model: @search_form, url: study_records_path, method: :get, local: true do |f| %>
+  <div>
+    <%= f.label :from, "開始日" %>
+    <%= f.date_field :from %>
+  </div>
 
-  <%= f.label :to, "終了日" %>
-  <%= f.date_field :to, value: @search_form.to %>
+  <div>
+    <%= f.label :to, "終了日" %>
+    <%= f.date_field :to %>
+  </div>
 
-  <%= f.label :keyword, "キーワード" %>
-  <%= f.text_field :keyword, value: @search_form.keyword %>
+  <div>
+    <%= f.label :keyword, "キーワード" %>
+    <%= f.text_field :keyword %>
+  </div>
 
-  <%= f.label :target, "対象" %>
-  <%= f.select :target, [["すべて", ""], ["内容", "content"], ["メモ", "body"]], selected: @search_form.target %>
-
-  <%= f.submit "検索" %>
+  <%= f.submit "検索", class: "btn btn-secondary" %>
 <% end %>
 
 <h2>学習記録一覧</h2>
 
-<% @studies.each do |study| %>
-  <div>
-    <strong><%= study.date %></strong><br>
-
-    <%# 保存された内容名がある場合はテキストから表示する %>
-    <% if study.content_names.present? %>
-      <p>（記録時の内容）</p>
-      <ul>
-        <% study.content_names.each do |name| %>
-          <li><%= name %></li>
-        <% end %>
-      </ul>
-    <% else %>
-      <ul>
-        <% study.contents.each do |content| %>
-          <li><%= content.name %></li>
-        <% end %>
-      </ul>
-    <% end %>
-
-    <p><%= study.body %></p>
-  </div>
+<% if @studies.present? %>
+  <% @studies.each do |study| %>
+    <div>
+      <strong><%= study.date %></strong><br>
+      <p><%= simple_format(study.body) %></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>学習記録が見つかりませんでした。</p>
 <% end %>

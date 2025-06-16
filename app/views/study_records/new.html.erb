@@ -1,9 +1,9 @@
 <h1>学習記録の作成</h1>
 
-<% if @study.errors.any? %>
+<% if @study_record.errors.any? %>
   <div style="color: red;">
     <ul>
-      <% @study.errors.full_messages.each do |msg| %>
+      <% @study_record.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>
@@ -12,20 +12,20 @@
 
 <h2><%= action_name == "new" ? "新規学習記録作成" : "学習記録編集" %></h2>
 
-<%= form_with model: @study, local: true do |f| %>
+<%= form_with model: @study_record, local: true do |f| %>
   <div>
     <%= f.label :date, "学習日" %>
     <%= f.date_field :date %>
   </div>
 
-  <% if @contents.any? %>
+  <% if @learning_items.any? %>
   <div>
     <h3>学習項目（チェックしてください）</h3>
-    <% @contents.each do |content| %>
+    <% @learning_items.each do |item| %>
       <div>
-        <% checked = @study&.content_names&.include?(content.name) || false %>
-        <%= check_box_tag "study[content_ids][]", content.id, checked, id: "content_#{content.id}" %>
-        <%= label_tag "content_#{content.id}", content.name %>
+        <% checked = @study_record&.body.to_s.include?(item.name) %>
+        <%= check_box_tag "study_record[learning_item_ids][]", item.id, checked, id: "learning_item_#{item.id}" %>
+        <%= label_tag "learning_item_#{item.id}", item.name %>
       </div>
     <% end %>
   </div>
@@ -47,5 +47,5 @@
 
 <ul>
   <li><%= link_to "学習項目の一覧へ", learning_items_path %></li>
-  <li><%= link_to "学習項目を新しく追加する", new_content_path %></li>
+  <li><%= link_to "学習項目を新しく追加する", new_learning_item_path %></li>
 </ul>

@@ -4,10 +4,13 @@ class StudyRecordsController < ApplicationController
 
   def index
     @study_records = current_user.study_records.order(date: :desc)
-  end 
+    @search_form = StudySearchForm.new(search_params)
+    @studies = @search_form.search(current_user)
+  end
 
   def new
     @study_record = StudyRecord.new
+    @study = @study_record # ← ビューとの互換性維持のためだが混乱を招きやすい
     @learning_items = LearningItem.where(completed: false)
   end
 
@@ -62,6 +65,9 @@ class StudyRecordsController < ApplicationController
   end
 
   def study_record_params
-    params.require(:study_record).permit(:date, :body)
+    params.require(:study_record).permit(:date, :body, learning_item_ids: [])
+  end
+  def search_params
+    params.fetch(:study_search_form, {}).permit(:from, :to, :keyword)
   end
 end
