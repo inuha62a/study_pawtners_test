@@ -14,8 +14,8 @@ Rails.application.routes.draw do
   resources :articles do
     resources :comments, only: [ :create, :edit, :update, :destroy ]
   end
-  resources :studies
-  resources :contents do
+  resources :study_records
+  resources :learning_items do
     member do
       patch :toggle_complete
     end

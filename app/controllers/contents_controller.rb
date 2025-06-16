@@ -11,7 +11,7 @@ class ContentsController < ApplicationController
     if @content.save
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to contents_path, notice: "追加しました" }
+        format.html { redirect_to learning_items_path, notice: "追加しました" }
       end
     else
       render :new, status: :unprocessable_entity
@@ -29,7 +29,7 @@ class ContentsController < ApplicationController
     if @content.update(content_params)
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to contents_path, notice: "更新しました" }
+        format.html { redirect_to learning_items_path, notice: "更新しました" }
       end
     else
       render :edit, status: :unprocessable_entity
@@ -40,7 +40,7 @@ class ContentsController < ApplicationController
     @content.destroy
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to contents_path, notice: "削除しました" }
+      format.html { redirect_to learning_items_path, notice: "削除しました" }
     end
   end
 
@@ -48,7 +48,7 @@ class ContentsController < ApplicationController
     @content.update(completed: !@content.completed)
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to contents_path, notice: "ステータスを変更しました" }
+      format.html { redirect_to learning_items_path, notice: "ステータスを変更しました" }
     end
   end
 

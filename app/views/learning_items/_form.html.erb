@@ -1,0 +1,25 @@
+<%= form_with(model: @study_record, local: true) do |form| %>
+  <div>
+    <%= form.label :date, "学習日" %><br>
+    <%= form.date_field :date, value: @study_record.date || Date.current %>
+  </div>
+
+  <div>
+    <p>学習項目（チェックしてください）</p>
+    <% @learning_items.each do |item| %>
+      <div>
+        <%= check_box_tag 'study_record[learning_item_ids][]', item.id %>
+        <%= label_tag "study_record_learning_item_ids_#{item.id}", item.name %>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :body, "学習メモなど" %><br>
+    <%= form.text_area :body, rows: 8 %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
