@@ -9,7 +9,7 @@
   <ul>
     <% @studies.each do |study| %>
       <li>
-        <%= link_to study.title, studiy_path(study), data: { turbo: false } %>
+        <%= link_to study.title, study_path(study), data: { turbo: false } %>
       </li>
     <% end %>
   </ul>

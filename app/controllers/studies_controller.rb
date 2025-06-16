@@ -3,6 +3,7 @@ class StudiesController < ApplicationController
 
   def index
     @user = current_user
+    @studies = Study.all 
   end
 
   def show
