@@ -10,27 +10,31 @@
   </div>
 <% end %>
 
+<h2><%= action_name == "new" ? "新規学習記録作成" : "学習記録編集" %></h2>
+
 <%= form_with model: @study, local: true do |f| %>
   <div>
     <%= f.label :date, "学習日" %>
     <%= f.date_field :date %>
   </div>
 
-  <h3>学習項目（未完了）</h3>
-
   <% if @contents.any? %>
+  <div>
+    <h3>学習項目（チェックしてください）</h3>
     <% @contents.each do |content| %>
       <div>
-        <%= check_box_tag "study[content_ids][]", content.id %>
-        <%= content.name %>
+        <% checked = @study&.content_names&.include?(content.name) || false %>
+        <%= check_box_tag "study[content_ids][]", content.id, checked, id: "content_#{content.id}" %>
+        <%= label_tag "content_#{content.id}", content.name %>
       </div>
     <% end %>
+  </div>
   <% else %>
     <p>未完了の学習項目がありません。</p>
   <% end %>
-
+  
   <div>
-    <%= f.label :body, "メモ" %><br>
+    <%= f.label :body, "学習内容" %><br>
     <%= f.text_area :body %>
   </div>
 

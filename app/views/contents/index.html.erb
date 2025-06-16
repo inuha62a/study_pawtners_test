@@ -1,11 +1,13 @@
-<h1>学習項目一覧</h1>
+<h2>学習項目一覧</h2>
 
-<div id="new_content">
+<%= turbo_frame_tag "contents" do %>
+  <%= render partial: "content", collection: @contents, as: :content %>
+<% end %>
+
+<h2>新しい学習項目を追加</h2>
+
+<%= turbo_frame_tag "new_content" do %>
   <%= render "form", content: @content %>
-</div>
-
-<div id="contents">
-  <%= render partial: "content", collection: @contents %>
-</div>
+<% end %>
 
 <%= link_to "← 学習記録作成に戻る", new_study_path %>

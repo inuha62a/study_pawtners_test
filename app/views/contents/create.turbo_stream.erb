@@ -1,2 +1,2 @@
-<%= turbo_stream.prepend "contents", partial: "contents/content", locals: { content: @content } %>
-<%= turbo_stream.replace "new_content", partial: "contents/form", locals: { content: Content.new } %>
+<%= turbo_stream.prepend "contents", partial: "content", locals: { content: @content } %>
+<%= turbo_stream.replace "new_content", partial: "form", locals: { content: Content.new } %>

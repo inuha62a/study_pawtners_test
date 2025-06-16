@@ -1,11 +1,9 @@
 <h4 class="fw-bold">
   <span class="me-1">🐾</span>
   <span> <%= "#{current_user.name}さんの学習記録" %></span>
-
 </h4>
 
-<%= link_to "＋ 新しい学習記録を追加", new_study_path, class: "btn btn-primary mb-3" %>
-
+<%= link_to "新しい学習記録を追加", new_study_path, class: "btn btn-primary mb-3" %>
 
 <%= form_with url: studies_path, method: :get, local: true do |f| %>
   <%= f.label :from, "開始日" %>
@@ -28,11 +26,23 @@
 <% @studies.each do |study| %>
   <div>
     <strong><%= study.date %></strong><br>
-    <ul>
-      <% study.contents.each do |content| %>
-        <li><%= content.name %></li>
-      <% end %>
-    </ul>
+
+    <%# 保存された内容名がある場合はテキストから表示する %>
+    <% if study.content_names.present? %>
+      <p>（記録時の内容）</p>
+      <ul>
+        <% study.content_names.each do |name| %>
+          <li><%= name %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <ul>
+        <% study.contents.each do |content| %>
+          <li><%= content.name %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
     <p><%= study.body %></p>
   </div>
 <% end %>

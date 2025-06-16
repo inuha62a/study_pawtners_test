@@ -1,13 +1,14 @@
-<h1>学習記録（<%= @study.date.strftime('%Y/%m/%d') if @study.date %>）</h1>
+<h2>学習記録詳細</h2>
 
-<p><strong>メモ:</strong></p>
-<p><%= simple_format(@study.body) %></p>
+<p><strong>日付:</strong> <%= @study.date %></p>
+<p><strong>内容:</strong> <%= simple_format(@study.body) %></p>
 
-<h3>完了した学習項目</h3>
+<p><strong>学習項目:</strong></p>
 <ul>
-  <% @study.contents.each do |content| %>
-    <li><%= content.name %></li>
+  <% @study.content_names.each do |name| %>
+    <li><%= name %></li>
   <% end %>
 </ul>
 
-<%= link_to "一覧に戻る", studies_path %>
+<%= link_to "編集", edit_study_path(@study) %> |
+<%= link_to "一覧へ戻る", studies_path %>
