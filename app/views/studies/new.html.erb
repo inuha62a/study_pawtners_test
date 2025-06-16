@@ -2,16 +2,24 @@
 
 <%= form_with model: @study, local: true do |f| %>
   <div>
-    <%= f.label :date, "学習日" %><br>
-    <%= f.datetime_select :date %>
+    <%= f.label :date, "学習日" %>
+    <%= f.date_field :date %>
+  </div>
+
+  <div>
+    <p>学習項目：</p>
+    <% @available_contents.each do |content| %>
+      <div>
+        <%= check_box_tag "content_ids[]", content.id %>
+        <%= content.name %>
+      </div>
+    <% end %>
   </div>
 
   <div>
     <%= f.label :body, "メモ" %><br>
-    <%= f.text_area :body, rows: 5 %>
+    <%= f.text_area :body %>
   </div>
 
-  <div>
-    <%= f.submit "記録する" %>
-  </div>
+  <%= f.submit "記録する" %>
 <% end %>

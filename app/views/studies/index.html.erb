@@ -3,14 +3,35 @@
   <span> <%= "#{@user.name}さんの学習記録" %></span>
 </h4>
 
-<h1>学習記録一覧</h1>
+<%= link_to "＋ 新しい学習記録を追加", new_study_path, class: "btn btn-primary mb-3" %>
 
-<turbo-frame id="studies">
-  <ul>
-    <% @studies.each do |study| %>
-      <li>
-        <%= link_to study.title, study_path(study), data: { turbo: false } %>
-      </li>
-    <% end %>
-  </ul>
-</turbo-frame>
+
+<%= form_with url: studies_path, method: :get, local: true do |f| %>
+  <%= f.label :from, "開始日" %>
+  <%= f.date_field :from, value: @search_form.from %>
+
+  <%= f.label :to, "終了日" %>
+  <%= f.date_field :to, value: @search_form.to %>
+
+  <%= f.label :keyword, "キーワード" %>
+  <%= f.text_field :keyword, value: @search_form.keyword %>
+
+  <%= f.label :target, "対象" %>
+  <%= f.select :target, [["すべて", ""], ["内容", "content"], ["メモ", "body"]], selected: @search_form.target %>
+
+  <%= f.submit "検索" %>
+<% end %>
+
+<h2>学習記録一覧</h2>
+
+<% @studies.each do |study| %>
+  <div>
+    <strong><%= study.date %></strong><br>
+    <ul>
+      <% study.contents.each do |content| %>
+        <li><%= content.name %></li>
+      <% end %>
+    </ul>
+    <p><%= study.body %></p>
+  </div>
+<% end %>
