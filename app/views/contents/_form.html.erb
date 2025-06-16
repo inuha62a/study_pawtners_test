@@ -1,0 +1,17 @@
+<%= form_with model: content do |f| %>
+    <% if content.errors.any? %>
+      <div style="color: red;">
+        <ul>
+          <% content.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
+    <div>
+      <%= f.label :name, "新しい学習項目" %>
+      <%= f.text_field :name %>
+      <%= f.submit "追加" %>
+    </div>
+  <% end %>

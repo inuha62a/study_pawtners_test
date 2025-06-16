@@ -1,5 +1,7 @@
 class Study < ApplicationRecord
   belongs_to :user
-  has_many :contents, dependent: :destroy
-  accepts_nested_attributes_for :contents, allow_destroy: true
+  has_many :study_contents, dependent: :destroy
+  has_many :contents, through: :study_contents
+
+  validates :date, presence: true
 end

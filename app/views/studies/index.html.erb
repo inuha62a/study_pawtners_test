@@ -1,6 +1,7 @@
 <h4 class="fw-bold">
   <span class="me-1">🐾</span>
-  <span> <%= "#{@user.name}さんの学習記録" %></span>
+  <span> <%= "#{current_user.name}さんの学習記録" %></span>
+
 </h4>
 
 <%= link_to "＋ 新しい学習記録を追加", new_study_path, class: "btn btn-primary mb-3" %>

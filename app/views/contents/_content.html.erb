@@ -1,0 +1,14 @@
+<turbo-frame id="content_<%= content.id %>">
+  <div>
+    <strong><%= content.name %></strong> -
+    <% if content.completed %>
+      ✅ 完了
+    <% else %>
+      ⏳ 未完了
+    <% end %>
+    |
+    <%= button_to (content.completed ? "未完了に戻す" : "完了にする"), toggle_complete_content_path(content), method: :patch, form: { data: { turbo_frame: "content_#{content.id}" } } %>
+    |
+    <%= link_to "削除", content_path(content), method: :delete, data: { turbo_confirm: "削除してもよろしいですか？" }, data: { turbo_frame: "content_#{content.id}" } %>
+  </div>
+</turbo-frame>

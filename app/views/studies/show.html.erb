@@ -1,0 +1,13 @@
+<h1>学習記録（<%= @study.date.strftime('%Y/%m/%d') if @study.date %>）</h1>
+
+<p><strong>メモ:</strong></p>
+<p><%= simple_format(@study.body) %></p>
+
+<h3>完了した学習項目</h3>
+<ul>
+  <% @study.contents.each do |content| %>
+    <li><%= content.name %></li>
+  <% end %>
+</ul>
+
+<%= link_to "一覧に戻る", studies_path %>

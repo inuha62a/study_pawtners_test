@@ -1,20 +1,33 @@
 <h1>学習記録の作成</h1>
 
+<% if @study.errors.any? %>
+  <div style="color: red;">
+    <ul>
+      <% @study.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_with model: @study, local: true do |f| %>
   <div>
     <%= f.label :date, "学習日" %>
     <%= f.date_field :date %>
   </div>
 
-  <div>
-    <p>学習項目：</p>
-    <% @available_contents.each do |content| %>
+  <h3>学習項目（未完了）</h3>
+
+  <% if @contents.any? %>
+    <% @contents.each do |content| %>
       <div>
-        <%= check_box_tag "content_ids[]", content.id %>
+        <%= check_box_tag "study[content_ids][]", content.id %>
         <%= content.name %>
       </div>
     <% end %>
-  </div>
+  <% else %>
+    <p>未完了の学習項目がありません。</p>
+  <% end %>
 
   <div>
     <%= f.label :body, "メモ" %><br>
@@ -23,3 +36,12 @@
 
   <%= f.submit "記録する" %>
 <% end %>
+
+<hr>
+
+<h2>その他操作</h2>
+
+<ul>
+  <li><%= link_to "学習項目の一覧へ", contents_path %></li>
+  <li><%= link_to "学習項目を新しく追加する", new_content_path %></li>
+</ul>
