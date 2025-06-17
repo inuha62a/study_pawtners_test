@@ -1,15 +1,9 @@
 <h2>学習記録詳細</h2>
 
 <p><strong>日付:</strong> <%= @study_record.date %></p>
-<p><strong>内容:</strong> <%= simple_format(@study_record.body) %></p>
 
-<p><strong>学習項目:</strong></p>
-<ul>
-  <% @study.content_names.each do |name| %>
-    <li><%= name %></li>
-  <% end %>
-</ul>
+<p><strong>内容:</strong></p>
+<p><%= simple_format(@study_record.body) %></p>
 
-<%= link_to "編集", edit_study_records_path
-(@study) %> |
+<%= link_to "編集", edit_study_record_path(@study_record) %> |
 <%= link_to "一覧へ戻る", study_records_path %>
