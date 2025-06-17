@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_16_160204) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_16_184353) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +68,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_16_160204) do
     t.boolean "completed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "study_record_id"
+    t.index ["study_record_id"], name: "index_learning_items_on_study_record_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -105,5 +107,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_16_160204) do
   add_foreign_key "articles", "users"
   add_foreign_key "comments", "articles"
   add_foreign_key "comments", "users"
+  add_foreign_key "learning_items", "study_records"
   add_foreign_key "study_records", "users"
 end

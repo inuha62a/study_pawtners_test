@@ -18,11 +18,7 @@ class LearningItemsController < ApplicationController
         format.html { redirect_to learning_items_path, notice: "追加しました" }
       end
     else
-      @learning_items = LearningItem.order(created_at: :desc)  # ← これを追加
-      respond_to do |format|
-        format.html { render :index, status: :unprocessable_entity }
-        format.turbo_stream { render :index, formats: [:html], status: :unprocessable_entity }
-      end
+      render :index, status: :unprocessable_entity
     end
   end
 

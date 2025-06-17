@@ -1,0 +1,9 @@
+<!-- app/views/learning_items/_item.html.erb -->
+<li id="<%= dom_id(learning_item) %>">
+  <%= learning_item.name %>
+
+  <%= button_to "削除", learning_item_path(learning_item),
+                method: :delete,
+                form: { data: { turbo_stream: true } },
+                data: { confirm: "本当に削除しますか？" } %>
+</li>

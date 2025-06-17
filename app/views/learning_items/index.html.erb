@@ -8,15 +8,4 @@
   <%= render partial: "form", locals: { learning_item: @learning_item } %>
 </div>
 
-<!-- 未完了の学習項目チェックボックスリスト -->
-<div>
-  <h2>未完了の学習項目</h2>
-  <% @learning_items.where(completed: false).each do |item| %>
-    <div>
-      <%= check_box_tag "learning_item_ids[]", item.id, false, disabled: true %>
-      <%= label_tag "learning_item_#{item.id}", item.name %>
-    </div>
-  <% end %>
-</div>
-
 <%= link_to "← 学習記録作成に戻る", new_study_record_path %>
