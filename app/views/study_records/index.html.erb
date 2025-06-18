@@ -1,6 +1,6 @@
 <h4 class="fw-bold">
   <span class="me-1">🐾</span>
-  <span> <%= "#{current_user.name}さんの学習記録" %></span>
+  <span><%= "#{current_user.name}さんの学習記録" %></span>
 </h4>
 
 <%= link_to "新しい学習記録を追加", new_study_record_path, class: "btn btn-primary mb-3" %>
@@ -28,9 +28,22 @@
 
 <% if @studies.present? %>
   <% @studies.each do |study| %>
-    <div>
-      <strong><%= study.date %></strong><br>
-      <p><%= simple_format(study.body) %></p>
+    <div class="mb-4 p-3 border rounded">
+      <strong><%= study.date.strftime("%Y年%m月%d日") %></strong><br>
+
+      <% if study.learning_items.any? %>
+        <ul>
+          <% study.learning_items.each do |item| %>
+            <li><%= item.name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <% if study.body.present? %>
+        <p><%= simple_format(study.body) %></p>
+      <% end %>
+
+      <%= link_to "編集", edit_study_record_path(study), class: "btn btn-outline-secondary btn-sm mt-2" %>
     </div>
   <% end %>
 <% else %>
