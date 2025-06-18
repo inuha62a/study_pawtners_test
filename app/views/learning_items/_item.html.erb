@@ -1,9 +1,16 @@
-<!-- app/views/learning_items/_item.html.erb -->
 <li id="<%= dom_id(learning_item) %>">
-  <%= learning_item.name %>
+  <strong><%= learning_item.name %></strong>
+  <%= learning_item.completed ? "✅" : "⏳" %>
+
+  <%= button_to "切替", toggle_complete_learning_item_path(learning_item, status: params[:status]),
+                method: :patch,
+                form: { data: { turbo_stream: true } } %>
+
+  <%= link_to "編集", edit_learning_item_path(learning_item),
+              data: { turbo_frame: dom_id(learning_item) } %>
 
   <%= button_to "削除", learning_item_path(learning_item),
                 method: :delete,
                 form: { data: { turbo_stream: true } },
-                data: { confirm: "本当に削除しますか？" } %>
+                data: { confirm: "削除しますか？" } %>
 </li>

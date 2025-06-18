@@ -1,11 +1,14 @@
 <h1>学習項目一覧</h1>
 
-<div id="learning_items_list">
-  <%= render @learning_items %> <!-- _learning_item.html.erb を利用する -->
+<div class="tabs">
+  <%= link_to "⏳ 未完了", learning_items_path(status: "incomplete"), data: { turbo_frame: "items_list" }, class: "btn" %>
+  <%= link_to "✅ 完了", learning_items_path(status: "complete"), data: { turbo_frame: "items_list" }, class: "btn" %>
 </div>
+
+<turbo-frame id="items_list">
+  <%= render partial: "learning_items/list", locals: { learning_items: @learning_items, status: params[:status] || "incomplete" } %>
+</turbo-frame>
 
 <div id="new_learning_item_form">
   <%= render partial: "form", locals: { learning_item: @learning_item } %>
 </div>
-
-<%= link_to "← 学習記録作成に戻る", new_study_record_path %>

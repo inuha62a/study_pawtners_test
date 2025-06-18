@@ -1,21 +1,8 @@
 <div>
-  <h2>すべての学習項目</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>項目名</th>
-        <th>ステータス</th>
-        <th>操作</th>
-      </tr>
-    </thead>
-    <tbody>
-      <ul>
-        <% learning_items.each do |item| %>
-          <li id="learning_item_<%= item.id %>">
-            <%= item.name %> <% if item.completed %>✅<% end %>
-          </li>
-        <% end %>
-      </ul>
-    </tbody>
-  </table>
+  <h2><%= status == "complete" ? "完了済み項目" : "未完了項目" %></h2>
+  <ul>
+    <% learning_items.each do |item| %>
+      <%= render partial: "item", locals: { learning_item: item } %>
+    <% end %>
+  </ul>
 </div>

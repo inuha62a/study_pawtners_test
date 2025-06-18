@@ -2,8 +2,16 @@ class LearningItemsController < ApplicationController
   before_action :set_learning_item, only: [:edit, :update, :destroy, :toggle_complete]
 
   def index
-    @learning_items = LearningItem.order(created_at: :desc)
+    status = params[:status] || "incomplete"
     @learning_item = LearningItem.new
+    @learning_items = LearningItem.where(completed: status == "complete")
+  
+    respond_to do |format|
+      format.html
+      format.turbo_stream {
+        render partial: "learning_items/list", locals: { learning_items: @learning_items, status: status }
+      }
+    end
   end
 
   def create
