@@ -61,10 +61,18 @@ class LearningItemsController < ApplicationController
   end
 
   def toggle_complete
+    @learning_item = LearningItem.find(params[:id])
     @learning_item.update(completed: !@learning_item.completed)
+  
+    current_status = params[:status] || "incomplete"
+  
     respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to learning_items_path, notice: "ステータスを切り替えました" }
+      format.turbo_stream {
+        render "learning_items/toggle_complete", formats: [:turbo_stream], locals: { status: current_status }
+      }
+      format.html {
+        redirect_to learning_items_path(status: current_status), notice: "ステータスを切り替えました"
+      }
     end
   end
 

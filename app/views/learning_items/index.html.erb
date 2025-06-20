@@ -10,7 +10,8 @@
 </div>
 
 <turbo-frame id="items_list_frame">
-  <div>
-    <%= render partial: "learning_items/list", locals: { learning_items: @learning_items, status: params[:status] || "incomplete" } %>
-  </div>
+  <%= render partial: "learning_items/list", locals: {
+        learning_items: @learning_items,
+        status: params[:status] || "incomplete"
+      } %>
 </turbo-frame>

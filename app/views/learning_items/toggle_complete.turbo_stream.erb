@@ -1,0 +1,8 @@
+<% current_status = status || "incomplete" %>
+
+<%= turbo_stream.replace "learning_items_list" do %>
+  <%= render partial: "learning_items/list", locals: {
+        learning_items: LearningItem.where(completed: current_status == "complete"),
+        status: current_status
+      } %>
+<% end %>

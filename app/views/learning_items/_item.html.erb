@@ -2,8 +2,8 @@
   <strong><%= learning_item.name %></strong>
 
   <%= button_to "切替", toggle_complete_learning_item_path(learning_item, status: params[:status]),
-                method: :patch,
-                form: { data: { turbo_stream: true } } %>
+              method: :patch,
+              data: { turbo_stream: true } %>
 
   <%= link_to "編集", edit_learning_item_path(learning_item),
               data: { turbo_frame: dom_id(learning_item) } %>
