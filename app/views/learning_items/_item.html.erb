@@ -1,6 +1,5 @@
 <li id="<%= dom_id(learning_item) %>">
   <strong><%= learning_item.name %></strong>
-  <%= learning_item.completed ? "✅" : "⏳" %>
 
   <%= button_to "切替", toggle_complete_learning_item_path(learning_item, status: params[:status]),
                 method: :patch,
