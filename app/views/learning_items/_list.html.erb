@@ -1,6 +1,6 @@
 <div>
   <h2><%= status == "complete" ? "完了済み項目" : "未完了項目" %></h2>
-  <ul>
+  <ul id="learning_items_list"> <!-- ← ここにidを付ける -->
     <% learning_items.each do |item| %>
       <%= render partial: "item", locals: { learning_item: item } %>
     <% end %>
