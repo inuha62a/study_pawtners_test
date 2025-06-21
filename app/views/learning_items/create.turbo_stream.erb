@@ -1,2 +1,2 @@
-<%= turbo_stream.prepend "learning_items_list", partial: "learning_items/item", locals: { learning_item: @learning_item } %>
+<%= turbo_stream.prepend "items_list_frame", partial: "learning_items/item", locals: { learning_item: @learning_item, status: @status } %>
 <%= turbo_stream.replace "new_learning_item_form", partial: "learning_items/form", locals: { learning_item: LearningItem.new } %>

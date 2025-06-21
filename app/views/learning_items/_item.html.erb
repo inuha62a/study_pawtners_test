@@ -1,15 +1,15 @@
 <li id="<%= dom_id(learning_item) %>">
   <strong><%= learning_item.name %></strong>
 
-  <%= button_to "切替", toggle_complete_learning_item_path(learning_item, status: params[:status]),
-              method: :patch,
-              data: { turbo_stream: true } %>
+  <%= link_to "切替", toggle_complete_learning_item_path(learning_item, status: status),
+              data: { turbo_method: :patch, turbo_stream: true },
+              class: "btn btn-secondary" %>
 
-  <%= link_to "編集", edit_learning_item_path(learning_item),
-              data: { turbo_frame: dom_id(learning_item) } %>
+  <%= link_to "編集", edit_learning_item_path(learning_item, status: status),
+              data: { turbo_frame: dom_id(learning_item) },
+              class: "btn btn-outline-primary" %>
 
-  <%= button_to "削除", learning_item_path(learning_item),
-                method: :delete,
-                form: { data: { turbo_stream: true } },
-                data: { confirm: "削除しますか？" } %>
+  <%= link_to "削除", learning_item_path(learning_item, status: status),
+              data: { turbo_method: :delete, turbo_stream: true, confirm: "削除しますか？" },
+              class: "btn btn-danger" %>
 </li>
