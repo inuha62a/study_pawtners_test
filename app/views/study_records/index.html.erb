@@ -1,0 +1,51 @@
+<h4 class="fw-bold">
+  <span class="me-1">🐾</span>
+  <span><%= "#{current_user.name}さんの学習記録" %></span>
+</h4>
+
+<%= link_to "新しい学習記録を追加", new_study_record_path, class: "btn btn-primary mb-3" %>
+
+<%= form_with model: @search_form, url: study_records_path, method: :get, local: true do |f| %>
+  <div>
+    <%= f.label :from, "開始日" %>
+    <%= f.date_field :from %>
+  </div>
+
+  <div>
+    <%= f.label :to, "終了日" %>
+    <%= f.date_field :to %>
+  </div>
+
+  <div>
+    <%= f.label :keyword, "キーワード" %>
+    <%= f.text_field :keyword %>
+  </div>
+
+  <%= f.submit "検索", class: "btn btn-secondary" %>
+<% end %>
+
+<h2>学習記録一覧</h2>
+
+<% if @studies.present? %>
+  <% @studies.each do |study| %>
+    <div class="mb-4 p-3 border rounded">
+      <strong><%= study.date.strftime("%Y年%m月%d日") %></strong><br>
+
+      <% if study.learning_items.any? %>
+        <ul>
+          <% study.learning_items.each do |item| %>
+            <li><%= item.name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <% if study.body.present? %>
+        <p><%= simple_format(study.body) %></p>
+      <% end %>
+
+      <%= link_to "編集", edit_study_record_path(study), class: "btn btn-outline-secondary btn-sm mt-2" %>
+    </div>
+  <% end %>
+<% else %>
+  <p>学習記録が見つかりませんでした。</p>
+<% end %>

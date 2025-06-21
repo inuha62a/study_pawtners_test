@@ -1,0 +1,17 @@
+<h1>学習項目一覧</h1>
+
+<div id="new_learning_item_form">
+  <%= render partial: "form", locals: { learning_item: @learning_item } %>
+</div>
+
+<div class="tabs">
+  <%= link_to "⏳ 未完了", learning_items_path(status: "incomplete"), data: { turbo_frame: "items_list_frame" }, class: "btn" %>
+  <%= link_to "✅ 完了", learning_items_path(status: "complete"), data: { turbo_frame: "items_list_frame" }, class: "btn" %>
+</div>
+
+<turbo-frame id="items_list_frame">
+  <%= render partial: "learning_items/list", locals: {
+        learning_items: @learning_items,
+        status: params[:status] || "incomplete"
+      } %>
+</turbo-frame>

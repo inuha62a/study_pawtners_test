@@ -1,0 +1,46 @@
+<h1>学習記録の編集</h1>
+
+<% if @study_record.errors.any? %>
+  <div style="color: red;">
+    <ul>
+      <% @study_record.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @study_record, local: true do |f| %>
+  <div>
+    <%= f.label :date, "学習日" %>
+    <%= f.date_field :date %>
+  </div>
+
+  <% if @learning_items.any? %>
+    <div>
+      <h3>学習項目（チェックしてください）</h3>
+      <% @learning_items.each do |item| %>
+        <div>
+          <%= check_box_tag "study_record[learning_item_ids][]", item.id, @study_record.learning_item_ids.include?(item.id), id: "learning_item_#{item.id}" %>
+          <%= label_tag "learning_item_#{item.id}", item.name %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>未完了または選択済みの学習項目がありません。</p>
+  <% end %>
+
+  <div>
+    <%= f.label :body, "メモ（任意）" %><br>
+    <%= f.text_area :body, placeholder: "自由記述欄としてお使いください" %>
+  </div>
+
+  <%= f.submit "更新する", class: "btn btn-primary mt-3" %>
+<% end %>
+
+<hr>
+
+<h2>その他操作</h2>
+<ul>
+  <li><%= link_to "学習記録一覧へ戻る", study_records_path %></li>
+</ul>

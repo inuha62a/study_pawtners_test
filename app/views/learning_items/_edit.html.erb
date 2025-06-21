@@ -1,0 +1,7 @@
+<%= form_with model: learning_item, url: learning_item_path(learning_item), method: :patch, data: { turbo_frame: dom_id(learning_item) } do |f| %>
+  <li id="<%= dom_id(learning_item) %>">
+    <%= f.text_field :name, value: learning_item.name %>
+    <%= f.submit "更新" %>
+    <%= link_to "キャンセル", learning_items_path(status: params[:status]), data: { turbo_frame: dom_id(learning_item) } %>
+  </li>
+<% end %>
