@@ -1,7 +1,7 @@
 class LearningItemsController < ApplicationController
-  before_action :set_learning_item, only: [:edit, :update, :destroy, :toggle_complete]
-  before_action :set_status, only: [:index, :toggle_complete]
-  before_action :set_learning_items, only: [:index, :toggle_complete]
+  before_action :set_learning_item, only: [ :edit, :update, :destroy, :toggle_complete ]
+  before_action :set_status, only: [ :index, :toggle_complete ]
+  before_action :set_learning_items, only: [ :index, :toggle_complete ]
 
   def index
     @status = params[:status] || "incomplete"
@@ -17,7 +17,7 @@ class LearningItemsController < ApplicationController
     @status = params[:status] || "incomplete"
     @learning_item = LearningItem.new(learning_item_params)
     @learning_items = LearningItem.where(completed: @status == "complete") # 追加 ✅
-  
+
     if @learning_item.save
       flash.now[:notice] = "追加しました"
       # Turbo Stream 対応テンプレートがあればここで処理
