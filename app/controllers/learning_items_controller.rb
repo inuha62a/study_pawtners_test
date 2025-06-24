@@ -2,25 +2,24 @@ class LearningItemsController < ApplicationController
   before_action :set_learning_item, only: [:edit, :update, :destroy, :toggle_complete]
 
   def index
-    status = params[:status] || "incomplete"
+    @status = params[:status] || "incomplete"
     @learning_item = LearningItem.new
-    @learning_items = LearningItem.where(completed: status == "complete")
-  
+    @learning_items = LearningItem.where(completed: @status == "complete")
     respond_to do |format|
+      format.turbo_stream
       format.html
-      format.turbo_stream {
-        render partial: "learning_items/list", locals: { learning_items: @learning_items, status: status }
-      }
     end
   end
 
   def create
     @learning_item = LearningItem.new(learning_item_params)
+    @status = params[:status]
     if @learning_item.save
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to learning_items_path, notice: "追加しました" }
-      end
+      flash.now[:notice] = "追加しました"
+      # respond_to do |format|
+      #   format.turbo_stream
+      #   format.html { redirect_to learning_items_path, notice: "追加しました" }
+      # end
     else
       render :index, status: :unprocessable_entity
     end
@@ -49,31 +48,30 @@ class LearningItemsController < ApplicationController
 
   def destroy
     # 他のStudyRecordと関連づいていたら削除しない（任意）
-    if @learning_item.learning_studies.exists?
-      redirect_to learning_items_path, alert: "学習記録と紐づいているため削除できません"
+    @prevent_deletion = @learning_item.learning_studies.exists?
+    if @prevent_deletion
+      flash.now[:alert] = "学習記録と紐づいているため削除できません"
     else
       @learning_item.destroy
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to learning_items_path, notice: "削除しました" }
-      end
+      flash.now[:notice] = "削除しました"
     end
   end
 
   def toggle_complete
     @learning_item = LearningItem.find(params[:id])
     @learning_item.update(completed: !@learning_item.completed)
-  
-    current_status = params[:status] || "incomplete"
-  
-    respond_to do |format|
-      format.turbo_stream {
-        render "learning_items/toggle_complete", formats: [:turbo_stream], locals: { status: current_status }
-      }
-      format.html {
-        redirect_to learning_items_path(status: current_status), notice: "ステータスを切り替えました"
-      }
-    end
+
+    @current_status = params[:status] || "incomplete"
+    flash.now[:notice] = "ステータスを切り替えました"
+
+    # respond_to do |format|
+    #   format.turbo_stream {
+    #     render "learning_items/toggle_complete", formats: [:turbo_stream], locals: { status: current_status }
+    #   }
+    #   format.html {
+    #     redirect_to learning_items_path(status: current_status), notice: "ステータスを切り替えました"
+    #   }
+    # end
   end
 
   private

@@ -1,8 +1,8 @@
-<% current_status = status || "incomplete" %>
+<%= turbo_stream.replace "flash", partial: "shared/flash" %>
 
-<%= turbo_stream.replace "learning_items_list" do %>
+<%= turbo_stream.replace "learning_items" do %>
   <%= render partial: "learning_items/list", locals: {
-        learning_items: LearningItem.where(completed: current_status == "complete"),
-        status: current_status
+        learning_items: LearningItem.where(completed: @current_status == "complete"),
+        status: @current_status
       } %>
 <% end %>

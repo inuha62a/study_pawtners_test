@@ -1,7 +1,7 @@
 <li id="<%= dom_id(learning_item) %>">
   <strong><%= learning_item.name %></strong>
 
-  <%= button_to "切替", toggle_complete_learning_item_path(learning_item, status: params[:status]),
+  <%= button_to "切替", toggle_complete_learning_item_path(learning_item, status: status),
               method: :patch,
               data: { turbo_stream: true } %>
 
@@ -10,6 +10,5 @@
 
   <%= button_to "削除", learning_item_path(learning_item),
                 method: :delete,
-                form: { data: { turbo_stream: true } },
-                data: { confirm: "削除しますか？" } %>
+                form: { data: { turbo_stream: true, turbo_confirm: "削除しますか？" } } %>
 </li>
