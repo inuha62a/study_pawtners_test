@@ -1,8 +1,9 @@
 <div>
-  <%= form_with model: learning_item, url: learning_items_path, local: true do |form| %>
+  <%= form_with model: learning_item, url: learning_items_path do |form| %>
     <div>
       <%= form.label :name, "項目名" %><br>
       <%= form.text_field :name %>
+      <%= hidden_field_tag :status, status, id: "input_hidden_status" %>
       <%= form.submit "追加" %>
     </div>
   <% end %>

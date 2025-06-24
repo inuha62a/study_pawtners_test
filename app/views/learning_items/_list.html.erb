@@ -1,7 +1,8 @@
-<h2><%= status == "complete" ? "完了済み項目" : "未完了項目" %></h2>
-
-<ul>
-  <% learning_items.each do |item| %>
-    <%= render partial: "item", locals: { learning_item: item, status: status } %>
-  <% end %>
-</ul>
+<div id="learning_items">
+  <h2><%= status == "complete" ? "完了済み項目" : "未完了項目" %></h2>
+  <ul id="learning_items_list">
+    <% learning_items.each do |item| %>
+      <%= render partial: "item", locals: { learning_item: item, status: status } %>
+    <% end %>
+  </ul>
+</div>

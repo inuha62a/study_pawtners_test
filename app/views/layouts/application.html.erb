@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <title><%= content_for(:title) || "Myapp" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -18,10 +18,9 @@
   </head>
 
   <body>
-    <%= render 'shared/header' %>
+    <%= render "shared/header" %>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <%= render "shared/flash" %>
 
     <%= yield %>
   </body>

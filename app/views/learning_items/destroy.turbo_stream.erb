@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "flash", partial: "shared/flash" %>
+
+<% unless @prevent_deletion %>
+  <%= turbo_stream.remove dom_id(@learning_item) %>
+<% end %>
