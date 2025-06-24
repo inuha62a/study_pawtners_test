@@ -1,5 +1,7 @@
 class LearningItemsController < ApplicationController
   before_action :set_learning_item, only: [:edit, :update, :destroy, :toggle_complete]
+  before_action :set_status, only: [:index, :toggle_complete]
+  before_action :set_learning_items, only: [:index, :toggle_complete]
 
   def index
     @status = params[:status] || "incomplete"
@@ -12,6 +14,7 @@ class LearningItemsController < ApplicationController
   end
 
   def create
+    @status = params[:status] || "incomplete"
     @learning_item = LearningItem.new(learning_item_params)
     @status = params[:status]
     if @learning_item.save
@@ -33,10 +36,18 @@ class LearningItemsController < ApplicationController
   end
 
   def update
+    @status = "incomplete" # ← デフォルトで未完了タブに戻す
     if @learning_item.update(learning_item_params)
+      @learning_items = LearningItem.where(completed: @status == "complete")
       respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to learning_items_path, notice: "項目を更新しました" }
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(
+            "items_list_frame",
+            partial: "learning_items/list",
+            locals: { learning_items: @learning_items, status: @status }
+          )
+        }
+        format.html { redirect_to learning_items_path(status: @status), notice: "項目を更新しました" }
       end
     else
       respond_to do |format|
@@ -58,7 +69,6 @@ class LearningItemsController < ApplicationController
   end
 
   def toggle_complete
-    @learning_item = LearningItem.find(params[:id])
     @learning_item.update(completed: !@learning_item.completed)
 
     @current_status = params[:status] || "incomplete"
@@ -78,6 +88,14 @@ class LearningItemsController < ApplicationController
 
   def set_learning_item
     @learning_item = LearningItem.find(params[:id])
+  end
+
+  def set_status
+    @status = params[:status] || "incomplete"
+  end
+
+  def set_learning_items
+    @learning_items = LearningItem.where(completed: @status == "complete")
   end
 
   def learning_item_params

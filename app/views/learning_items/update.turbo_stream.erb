@@ -1,1 +1,1 @@
-<%= turbo_stream.replace dom_id(@learning_item), partial: "learning_item", locals: { learning_item: @learning_item } %>
+<%= turbo_stream.replace "items_list_frame", partial: "learning_items/list", locals: { learning_items: @learning_items, status: @learning_item.status } %>
