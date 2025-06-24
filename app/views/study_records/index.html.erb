@@ -44,6 +44,10 @@
       <% end %>
 
       <%= link_to "編集", edit_study_record_path(study), class: "btn btn-outline-secondary btn-sm mt-2" %>
+      <%= link_to "削除", study_record_path(study),
+            method: :delete,
+            data: { confirm: "本当に削除してもよろしいですか？" },
+            class: "btn btn-outline-danger btn-sm mt-2 ms-2" %>
     </div>
   <% end %>
 <% else %>

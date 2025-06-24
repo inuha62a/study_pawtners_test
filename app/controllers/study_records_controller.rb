@@ -1,6 +1,6 @@
 class StudyRecordsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_study_record, only: [ :show, :edit, :update ]
+  before_action :set_study_record, only: [ :show, :edit, :update, :destroy ]
   before_action :set_learning_items, only: [ :edit, :update ]
 
   def index
@@ -43,6 +43,12 @@ class StudyRecordsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @study_record = current_user.study_records.find(params[:id])
+    @study_record.destroy
+    redirect_to study_records_path, notice: "学習記録を削除しました"
   end
 
   private
