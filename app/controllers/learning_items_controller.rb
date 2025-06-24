@@ -30,7 +30,7 @@ class LearningItemsController < ApplicationController
 
   def edit
     respond_to do |format|
-      format.turbo_stream
+      format.turbo_stream # ← このとき edit.turbo_stream.erb を探しにいく
       format.html
     end
   end
