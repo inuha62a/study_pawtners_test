@@ -16,13 +16,11 @@ class LearningItemsController < ApplicationController
   def create
     @status = params[:status] || "incomplete"
     @learning_item = LearningItem.new(learning_item_params)
-    @status = params[:status]
+    @learning_items = LearningItem.where(completed: @status == "complete") # 追加 ✅
+  
     if @learning_item.save
       flash.now[:notice] = "追加しました"
-      # respond_to do |format|
-      #   format.turbo_stream
-      #   format.html { redirect_to learning_items_path, notice: "追加しました" }
-      # end
+      # Turbo Stream 対応テンプレートがあればここで処理
     else
       render :index, status: :unprocessable_entity
     end
