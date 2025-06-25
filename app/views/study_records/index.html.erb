@@ -4,6 +4,7 @@
 </h4>
 
 <%= link_to "新しい学習記録を追加", new_study_record_path, class: "btn btn-primary mb-3" %>
+<%= link_to "学習項目の一覧へ", learning_items_path %>
 
 <%= form_with model: @search_form, url: study_records_path, method: :get, local: true do |f| %>
   <div>
