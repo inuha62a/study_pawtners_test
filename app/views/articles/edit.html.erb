@@ -17,5 +17,11 @@
     <%= f.label :image, "画像" %><br>
     <%= f.file_field :image %>
   </div>
+
+  <% if @article.image.attached? %>
+    <p>現在の画像：</p>
+    <%= image_tag @article.image.variant(resize_to_limit: [300, 300]) %>
+  <% end %>
+
   <%= f.submit "更新" %>
 <% end %>
