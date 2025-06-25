@@ -5,7 +5,7 @@
   <p>ステータス: <%= @article.status %></p>
 
   <% if @article.image.attached? %>
-    <p><%= image_tag @article.image %></p>
+    <p><%= image_tag @article.image.variant(resize_to_limit: [600, 600]) %></p>
   <% end %>
 
   <p>投稿者: <%= @article.user.name %></p>
