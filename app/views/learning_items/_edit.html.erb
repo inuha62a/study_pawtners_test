@@ -1,7 +1,13 @@
-<%= form_with model: learning_item, url: learning_item_path(learning_item), method: :patch, data: { turbo_frame: dom_id(learning_item) } do |f| %>
+<%= turbo_stream.replace dom_id(learning_item) do %>
   <li id="<%= dom_id(learning_item) %>">
-    <%= f.text_field :name, value: learning_item.name %>
-    <%= f.submit "更新" %>
-    <%= link_to "キャンセル", learning_items_path(status: params[:status]), data: { turbo_frame: dom_id(learning_item) } %>
+    <%= form_with model: learning_item,
+                  url: learning_item_path(learning_item, status: params[:status]),
+                  method: :patch,
+                  data: { turbo_stream: true } do |f| %>
+      <%= f.text_field :name, value: learning_item.name %>
+      <%= f.submit "更新" %>
+      <%= link_to "キャンセル", learning_items_path(status: params[:status]),
+                  data: { turbo_frame: dom_id(learning_item) } %>
+    <% end %>
   </li>
 <% end %>

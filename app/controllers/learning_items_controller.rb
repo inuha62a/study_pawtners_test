@@ -1,7 +1,7 @@
 class LearningItemsController < ApplicationController
-  before_action :set_learning_item, only: [:edit, :update, :destroy, :toggle_complete]
-  before_action :set_status, only: [:index, :toggle_complete]
-  before_action :set_learning_items, only: [:index, :toggle_complete]
+  before_action :set_learning_item, only: [ :edit, :update, :destroy, :toggle_complete ]
+  before_action :set_status, only: [ :index, :toggle_complete ]
+  before_action :set_learning_items, only: [ :index, :toggle_complete ]
 
   def index
     @status = params[:status] || "incomplete"
@@ -16,13 +16,11 @@ class LearningItemsController < ApplicationController
   def create
     @status = params[:status] || "incomplete"
     @learning_item = LearningItem.new(learning_item_params)
-    @status = params[:status]
+    @learning_items = LearningItem.where(completed: @status == "complete") # 追加 ✅
+
     if @learning_item.save
       flash.now[:notice] = "追加しました"
-      # respond_to do |format|
-      #   format.turbo_stream
-      #   format.html { redirect_to learning_items_path, notice: "追加しました" }
-      # end
+      # Turbo Stream 対応テンプレートがあればここで処理
     else
       render :index, status: :unprocessable_entity
     end
@@ -30,7 +28,7 @@ class LearningItemsController < ApplicationController
 
   def edit
     respond_to do |format|
-      format.turbo_stream
+      format.turbo_stream # ← このとき edit.turbo_stream.erb を探しにいく
       format.html
     end
   end

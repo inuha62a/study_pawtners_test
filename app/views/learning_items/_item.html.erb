@@ -6,8 +6,8 @@
               data: { turbo_stream: true } %>
 
   <%= link_to "編集", edit_learning_item_path(learning_item, status: status),
-              data: { turbo_frame: dom_id(learning_item) },
-              class: "btn btn-outline-primary" %>
+            data: { turbo_stream: true },
+            class: "btn btn-outline-primary" %>
 
   <%= button_to "削除", learning_item_path(learning_item),
                 method: :delete,

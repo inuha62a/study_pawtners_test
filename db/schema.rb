@@ -53,12 +53,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_18_045021) do
   end
 
   create_table "comments", force: :cascade do |t|
+    t.bigint "user_id", null: false
     t.bigint "article_id", null: false
     t.string "tag", default: [], array: true
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
     t.index ["article_id"], name: "index_comments_on_article_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -77,12 +77,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_18_045021) do
     t.datetime "updated_at", null: false
     t.index ["learning_item_id"], name: "index_learning_studies_on_learning_item_id"
     t.index ["study_record_id"], name: "index_learning_studies_on_study_record_id"
-  end
-
-  create_table "posts", force: :cascade do |t|
-    t.string "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "study_records", force: :cascade do |t|
